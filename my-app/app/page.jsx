@@ -10,7 +10,8 @@ export default function Home() {
 
       <Hero />
 
-      <section className="p-8">
+      <section className="bg-gray-50 dark:bg-slate-900 p-8 min-h-screen">
+
         <div className="grid md:grid-cols-2 gap-8">
 
           <Card
@@ -28,6 +29,7 @@ export default function Home() {
           />
 
         </div>
+
       </section>
 
       <Footer />
