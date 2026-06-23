@@ -19,8 +19,7 @@ export default function Navbar() {
 
         <Link href="/ai-feature">AI Feature</Link>
 
-        <Link href="/settings">Settings</Link>
-
+  
         <Link href="/login">Login</Link>
 
         <ThemeToggle />
