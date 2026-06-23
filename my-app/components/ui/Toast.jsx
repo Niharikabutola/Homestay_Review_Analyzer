@@ -1,26 +1,23 @@
-/**
- * Toast Component
- * Props:
- * - message
- * - type: success | error | warning | info
- */
+import { useEffect } from "react";
 
-export default function Toast({
-  message,
-  type = "success",
-}) {
+export default function Toast({ message, type = "success", onClose }) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
   const styles = {
-    success: "bg-green-600 text-white",
-    error: "bg-red-600 text-white",
-    warning: "bg-yellow-500 text-black",
-    info: "bg-blue-600 text-white",
+    success: "bg-green-500",
+    error: "bg-red-500",
+    info: "bg-blue-500",
   };
-
-  if (!message) return null;
 
   return (
     <div
-      className={`fixed top-5 right-5 px-5 py-3 rounded-lg shadow-lg z-50 ${styles[type]}`}
+      className={`fixed top-5 right-5 text-white px-4 py-3 rounded-lg shadow-lg ${styles[type]} animate-bounce`}
     >
       {message}
     </div>
