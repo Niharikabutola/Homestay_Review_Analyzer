@@ -1,7 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import Loader from "../../components/ui/Loader";
+import toast from "react-hot-toast";
 
 export default function Reviews() {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/reviews")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setReviews(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Failed to load reviews");
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -12,29 +38,38 @@ export default function Reviews() {
           Guest Reviews
         </h1>
 
-        <div className="space-y-6">
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="space-y-6">
+            {reviews.map((review) => (
+              <div
+                key={review.id}
+                className="border rounded-xl p-5 shadow bg-white dark:bg-slate-800"
+              >
+                <h2 className="text-xl font-semibold">
+                  {review.guest}
+                </h2>
 
-          <div className="border rounded-xl p-5 shadow">
-            <h2 className="font-semibold">
-              Excellent Experience
-            </h2>
+                <p className="mt-2">
+                  <strong>Homestay:</strong> {review.homestay}
+                </p>
 
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
-              The room was clean and the host was very welcoming.
-            </p>
+                <p>
+                  <strong>Rating:</strong> ⭐ {review.rating}
+                </p>
+
+                <p className="text-gray-600 dark:text-gray-300 mt-2">
+                  {review.review}
+                </p>
+
+                <p className="mt-2">
+                  <strong>Sentiment:</strong> {review.sentiment}
+                </p>
+              </div>
+            ))}
           </div>
-
-          <div className="border rounded-xl p-5 shadow">
-            <h2 className="font-semibold">
-              Comfortable Stay
-            </h2>
-
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
-              Great location and friendly service.
-            </p>
-          </div>
-
-        </div>
+        )}
 
       </main>
 
