@@ -15,7 +15,7 @@ export default function Navbar() {
 
         <Link href="/dashboard">Dashboard</Link>
 
-        <Link href="/reviews">Reviews</Link>
+      
 
         <Link href="/ai-feature">AI Feature</Link>
 
