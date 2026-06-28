@@ -1,6 +1,12 @@
+"use client";
+
 import { useEffect } from "react";
 
-export default function Toast({ message, type = "success", onClose }) {
+export default function Toast({
+  message,
+  type = "success",
+  onClose = () => {},
+}) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -17,7 +23,7 @@ export default function Toast({ message, type = "success", onClose }) {
 
   return (
     <div
-      className={`fixed top-5 right-5 text-white px-4 py-3 rounded-lg shadow-lg ${styles[type]} animate-bounce`}
+      className={`fixed top-5 right-5 px-5 py-3 rounded-lg shadow-lg text-white z-50 ${styles[type]}`}
     >
       {message}
     </div>
