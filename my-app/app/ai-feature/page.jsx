@@ -16,17 +16,76 @@ export default function AIFeature() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
+const analyzeReview = () => {
 
-  const analyzeReview = () => {
-    setLoading(true);
+  if (!text.trim()) {
+    toast.error("Please enter a review");
+    return;
+  }
 
-    setTimeout(() => {
-      setLoading(false);
-      setResult("Positive sentiment detected 👍");
-      setOpen(true);
-      toast.success("Review analyzed");
-    }, 1500);
-  };
+  setLoading(true);
+
+  setTimeout(() => {
+
+    const review = text.toLowerCase();
+
+    let sentiment = "";
+    let recommendation = "";
+
+    if (
+      review.includes("excellent") ||
+      review.includes("great") ||
+      review.includes("amazing") ||
+      review.includes("good") ||
+      review.includes("clean") ||
+      review.includes("friendly") ||
+      review.includes("comfortable")
+    ) {
+
+      sentiment = "😊 Positive";
+      recommendation =
+        "Guests are satisfied. Maintain the same quality of service.";
+
+    } else if (
+      review.includes("bad") ||
+      review.includes("dirty") ||
+      review.includes("poor") ||
+      review.includes("worst") ||
+      review.includes("late") ||
+      review.includes("rude") ||
+      review.includes("noisy") ||
+      review.includes("uncomfortable")
+    ) {
+
+      sentiment = "😞 Negative";
+      recommendation =
+        "Guest experience needs improvement. Review cleanliness and customer service.";
+
+    } else {
+
+      sentiment = "😐 Neutral";
+      recommendation =
+        "The review is neutral. Collect more detailed feedback.";
+    }
+
+    setResult(
+`Review Analysis
+
+Sentiment: ${sentiment}
+
+Recommendation:
+${recommendation}`
+    );
+
+    setOpen(true);
+
+    toast.success("Review analyzed successfully");
+
+    setLoading(false);
+
+  }, 1500);
+
+};
 
   return (
     <>
